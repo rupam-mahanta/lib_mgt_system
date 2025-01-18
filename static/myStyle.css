@@ -1,0 +1,166 @@
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.banner {
+    height: 80px;
+    width:100%;
+    font-size: 1.5rem;
+    background-color:black;
+    color: white;
+    text-align: center;
+    align-content: center;
+}
+
+/* .menu {
+    height:10px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color:grey;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+} */
+
+.main{
+    height:500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+}
+
+.homepage{
+    height:100%;
+    width: 100%;
+    background-image: url("/static/NPS.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 90%;
+}
+
+.flash_messages{
+    height: 30px;
+    width: 100%;         
+    padding-left: 10px;     
+}
+
+.footer {
+    background-color:black;
+    height:70px;
+    color: white;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding:20px;
+}
+
+form {
+    width: 95%;
+    height: 90%;
+    background-color: rgba(228, 237, 237, 0.653);
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: .85rem;
+    margin-left: 10px;
+}
+
+input {
+    width: 70%;
+    float: right;
+}
+
+
+
+.lib_form {
+    width: 45%;
+    height: 50%;
+    margin: 3%;
+}
+
+.lib_form_input {
+    width: 60%;
+    float: right;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: ceneter;
+}
+
+.mybutton {
+    background-color: blue;
+    color: white;
+    width: 80px;
+    height: 30px;
+    border: 1px solid blue;
+    border-radius: 5px;
+}
+
+.mybutton:hover {
+    cursor: pointer;
+    background-color: rgb(100, 100, 236)
+}
+
+.display_details {
+    /* display:flex;
+    justify-content: center;
+    align-items:center; */
+    border: 2px solid black;
+    margin-left: 5%;
+    margin-top: 10%;
+    padding-left: 5%;
+    padding-top: 2%;
+    width: 90%;
+    height: 70%;
+}
+
+.report_container {
+    height: 100%;
+    width: 100%;
+    background-color:rgba(211, 211, 211, 0.626);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.report_sub_container {
+    height: 100%;
+    width: 33%;
+    padding-top: 20px;
+    vertical-align: middle;
+
+}
+
+.login_form {
+    height: 75%;
+    width: 45%;
+    padding-top: 20px;
+    font-weight: 900;
+    padding-left:10px;
+}
+
+.display-flash-error {
+ color: red;
+ font-weight: bold;
+ font-size: 1rem;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout-button {
+  float:right;
+  font-weight:bolder;
+  padding-left:20px;
+  padding-right:20px;
+  margin-right:5px;
+}
+

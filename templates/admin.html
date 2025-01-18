@@ -1,0 +1,120 @@
+
+{% extends "base.html" %}
+
+{%  block navbar %}
+
+    <div class="navbar">
+        <div>
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                <a class="nav-link" href="/home/">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/librarian/">Librarian</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Admin</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/reports/">Reports</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="logout-button">
+             <a href="{{url_for('logout')}}" class="btn btn-warning btn-sm">
+                        Click to Logout </a>
+        </div>
+    </div>
+
+{% endblock navbar %}
+
+{%  block content %}
+
+<div class="report_container">
+
+    <div class="student_report_container report_sub_container">
+        <form method="POST" action="#" name="admin_std" onsubmit="return validateForm_admin_std()">
+            <br>
+            <label for="studentId"> Student Id: </label> <input type="text" id="studentId" name="studentId" value="">
+                   <br> <br>
+            <label for="studentName"> Student Name: </label> <input type="text" id="studentName" name="studentName">
+                    <br> <br>
+            <label for="studentGrade"> Student Grade: </label> <input type="text" id="studentGrade" name="studentGrade">
+                    <br> <br>
+            <label for="studentSection"> Student Section: </label> <input type="text" id="studentSection" name="studentSection">
+                    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+
+            <div class="form-buttons">
+                <input type="submit" value="Add" class="mybutton" formaction="{{url_for('student')}}" >
+                <input type="submit" value="Edit" class="mybutton" formaction="{{url_for('std_edit')}}" >                
+                <input type="submit" value="Delete" class="mybutton" formaction="{{url_for('std_delete')}}" > 
+                <br><br><br>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="teacher_report_container report_sub_container" style="background-color: lightgrey;">
+        <form method="POST" action="#" name="admin_teacher" onsubmit="return validateForm_admin_teacher()">
+            <br>
+            <label for="teacherID"> Teacher Id: </label> <input type="text" id="teacherId" name="teacherId" value="">
+                   <br> <br>
+            <label for="teacherName"> Teacher Name: </label> <input type="text" id="teacherName" name="teacherName">
+                    <br> <br>
+            <label for="teacherEmail"> Teacher email: </label> <input type="text" id="teacherEmail" name="teacherEmail">
+                    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+
+
+            <div class="form-buttons">
+                <input type="submit" value="Add" class="mybutton" formaction="{{url_for('teacher_add')}}">
+                <input type="submit" value="Edit" class="mybutton" formaction="{{url_for('teacher_edit')}}">
+                <input type="submit" value="Delete" class="mybutton" formaction="{{url_for('teacher_delete')}}">
+            </div>
+        </form>
+    </div>
+
+    <div class="book_report_container report_sub_container">
+        <form method="POST" action="#" name="admin_book" onsubmit="return validateForm_admin_book()">
+            <br>
+            <label for="bookId"> Book Id: </label> <input type="text" id="bookId" name="bookId" value="">
+                   <br> <br>
+            <label for="bookTitle"> Book Title: </label> <input type="text" id="bookTitle" name="bookTitle">
+                    <br> <br>
+            <label for="bookAuthor"> Book Author: </label> <input type="text" id="bookAuthor" name="bookAuthor">
+                    <br> <br>
+            <label for="bookSubject"> Book Subject: </label> <input type="text" id="bookSubject" name="bookSubject">
+                    <br> <br>
+            <label for="bookAvailability"> Availability: </label> <input type="text" id="bookAvailability" name="bookAvailability">
+                    <br> <br>
+            <label for="bookAllocatedId"> Allocated Id: </label> <input type="text" id="bookAllocatedId" name="bookAllocatedId">
+                    <br> <br>
+            <label for="bookIssueDate"> Issue Date: </label> <input type="text" id="bookIssueDate" name="bookIssueDate">
+                    <br> <br>
+            <label for="bookReturnDate"> Return Date: </label> <input type="text" id="bookReturnDate" name="bookReturnDate">
+                    <br> <br> <br>
+
+            <div class="form-buttons">
+                <input type="submit" value="Add" class="mybutton" formaction="{{url_for('book_add')}}">
+                <input type="submit" value="Edit" class="mybutton" formaction="{{url_for('book_edit')}}">
+                <input type="submit" value="Delete" class="mybutton" formaction="{{url_for('book_delete')}}">
+            </div>
+        </form>
+
+
+
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block Flash_Messages %}
+
+    {% with messages = get_flashed_messages() %}
+        {% for msg in messages %}      
+           <p>{{msg}}</p>
+        {% endfor %}
+    {% endwith %}
+
+{% endblock Flash_Messages %}

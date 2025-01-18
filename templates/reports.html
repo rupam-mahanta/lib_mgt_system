@@ -1,0 +1,117 @@
+
+{% extends "base.html" %}
+
+{%  block navbar %}
+    <div class="navbar">
+        <div>
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                <a class="nav-link" href="/home/">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/librarian/">Librarian</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/admin/">Admin</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Reports</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="logout-button">
+             <a href="{{url_for('logout')}}" class="btn btn-warning btn-sm">
+                        Click to Logout </a>
+        </div>
+    </div>
+
+{% endblock navbar %}
+
+
+{%  block content %}
+
+<div class="report_container">
+
+    <div class="student_report_container report_sub_container">
+        <form action="{{url_for('reports_student')}}" method="post" name="student" onsubmit="return validateForm_std()" 
+              style="width: 300px; height: 50px; margin-left: 10%;">
+
+            <label for="studentID"> Student Id: </label> <input type="number" id="studentId" name="studentId"> <br> <br>
+
+            <div class="form-buttons">
+                <input type="submit" value="Get Student Details" class="btn btn-primary btn-sm" formmethod="post">
+            </div>
+
+        </form>
+
+        <div class="display_details">
+            <p> student_id:  {{data[0]}}      </p>
+            <p> student_name:  {{data[1]}}    </p>
+            <p> student_grade:  {{data[2]}}   </p>
+            <p> student_section:  {{data[3]}} </p>     
+            <p> allocated book_ids:  {{data3}} </p> 
+        </div>
+    </div>
+
+    <div class="teacher_report_container report_sub_container" style="background-color: lightgrey;">
+        <form action="{{url_for('reports_teacher')}}" method="post" name="teacher"  onsubmit="return validateForm_teacher()"
+              style="width: 300px; height: 50px; margin-left: 10%;">
+            <label for="TeacherId"> Teacher Id: </label> <input type="number" id="teacherId" name="teacherId"> <br> <br>
+
+            <div class="form-buttons">
+                <input type="submit" value="Get Teacher Details" class="btn btn-primary btn-sm" formmethod="post">
+            </div>
+
+        </form>
+
+        <div class="display_details">
+            <p> teacher_id:  {{data1[0]}}      </p>
+            <p> teacher_name:  {{data1[1]}}    </p>
+            <p> teacher_email:  {{data1[2]}}   </p>
+            <p> allocated book_ids:  {{data4}} </p> 
+        </div>
+
+    </div>
+
+    <div class="book_report_container report_sub_container">
+        <form action="{{url_for('reports_book')}}" method="post" name="book"  onsubmit="return validateForm_book()"
+            style="width: 300px; height: 50px; margin-left: 10%;">
+            <label for="bookID"> Book Id: </label> <input type="number" id="bookId" name="bookId"> <br> <br>
+
+            <div class="form-buttons">
+                <input type="submit" value="Get Book Details" class="btn btn-primary btn-sm" formmethod="post">
+            </div>
+
+        </form>
+
+        <div class="display_details">
+            <p> book_id:  {{data2[0]}}      </p>
+            <p> book_title:  {{data2[1]}}    </p>
+            <p> book_author:  {{data2[2]}}   </p>
+            <p> book_subject:  {{data2[3]}} </p>
+            <p> book_availability:  {{data2[4]}} </p>
+            <p> allocated to:  {{data2[5]}} </p>
+            <p> issue_date(YYYY-MM-DD):  {{data2[6]}} </p>
+            <p> return_date(YYYY-MM-DD):  {{data2[7]}} </p>
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+
+{% block Flash_Messages %}
+
+    {% with messages = get_flashed_messages() %}
+        {% for msg in messages %}      
+           <p>{{msg}}</p>
+        {% endfor %}
+    {% endwith %}
+
+{% endblock Flash_Messages %}
+
+

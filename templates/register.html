@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{%  block navbar %}
+
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+        <a class="nav-link href="#"> </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#"> </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#"> </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#"> </a>
+        </li>
+    </ul>
+
+{% endblock %}
+
+{%  block content %}
+
+    <div class="homepage">
+        <div class="login_form">
+            <form action="{{url_for('register')}}" method="post">
+                <h3> Register: </h3> <br>
+                <div class="display-flash-error"> {{ msg }} </div>
+                <br>
+
+                <label for="username"> Enter Username : </label> <input id="username" name="username" type="text" value=""> <br><br>
+                <label for="password"> Enter Password : </label> <input id="password" name="password" type="password" value=""> <br><br>
+                <label for="email"> Enter Email : </label> <input id="email" name="email" type="text" value="">
+                <br><br><br>
+                <input type="submit" class="btn btn-primary btn-sm" value="Register">
+                <br><br>
+
+                <p> Already have an account?  <a class="bottom" href="{{url_for('login')}}"> Sign In here </a></p>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

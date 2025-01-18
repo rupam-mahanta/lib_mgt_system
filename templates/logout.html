@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{%  block navbar %}
+
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+        <a class="nav-link"  href="#"> </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#"> </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#"> </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#"> </a>
+        </li>
+    </ul>
+
+{% endblock %}
+
+{%  block content %}
+
+    <div class="homepage">
+        <div class="login_form">
+            <h2> You have successfully logged out. </h2>
+            <br>
+
+            <p> For logging back to the site... <a class="bottom" href="{{url_for('login')}}"> please click here </a></p>
+
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,41 @@
+
+{% extends "base.html" %}
+
+{% block navbar %}
+    <div class="navbar">
+        <div>
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/librarian/">Librarian</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/admin/">Admin</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/reports/">Reports</a>
+                <!-- <a class="nav-link" href="/reports/">Reports</a> -->
+                </li>
+            </ul>
+        </div>
+
+        <div class="logout-button">
+             <a href="{{url_for('logout')}}" class="btn btn-warning btn-sm">
+                        Click to Logout </a>
+        </div>
+    </div>
+
+
+{% endblock navbar %}
+
+{% block content %}
+<div class="homepage">
+  <!--<a href="{{ url_for('logout') }}" class="btn btn-warning btn-sm" style="float: right; font-weight: bolder; padding-left: 20px; padding-right: 20px;"> Click to Logout </a>-->
+  <br><br><br><br>
+  <h1 style="padding-left: 5%; font-weight: bold;"> Welcome to Library Management System ! </h1>
+</div>
+
+
+{% endblock %}
