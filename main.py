@@ -3,10 +3,20 @@ from flask import Flask, redirect, url_for, render_template, request, session, f
 from flask_sqlalchemy import SQLAlchemy
 import mysql.connector
 import re
+from flask_wtf import CSRFProtect 
+from flask_session import Session
 # import logging
 
 app = Flask(__name__)
 app.secret_key = "mysecretkey111!"
+csrf = CSRFProtect(app) 
+
+# for session
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
+
 
 # logging.basicConfig (
 #    filename = "LibMgtSys.log",
@@ -43,6 +53,8 @@ except mysql.connector.Error as e:
 
 @app.route('/home/', methods=["GET"])
 def home():
+   if not session.get("username"):
+        return redirect("/login/")   
    return render_template("index.html")
 
 
@@ -55,13 +67,13 @@ def login():
       password = request.form['password']
       cursor = db_connect.cursor()
       cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password,))
-      account = cursor.fetchone()
-      print(account)
+      account = cursor.fetchone()      
       cursor.close()
+
       if account:
          session['loggedin'] = True
-         # session['id'] = int(account['user_id'])
-         # session['username'] = account['username']
+         # session['id'] = account['user_id']
+         session['username'] = username
          msg = 'account details fetched successfully !'
          return render_template('index.html', msg = msg)
       else:
@@ -108,11 +120,16 @@ def register():
 
 @app.route("/admin/", methods=["GET", "POST"])
 def admin():
-    return render_template("admin.html")
+   if not session.get("username"):
+      return redirect("/login/")  
+   return render_template("admin.html")
 
 
 @app.route("/student/", methods=["GET", "POST"])
 def student():
+   if not session.get("username"):
+      return redirect("/login/") 
+   
    if request.method == "POST":
       std_id = request.form["studentId"]
       std_name = request.form["studentName"]
@@ -131,7 +148,9 @@ def student():
 
 @app.route("/student/<int:student_id>/", methods=["GET"])
 def student_id(student_id):
-   print (student_id)
+   if not session.get("username"):
+      return redirect("/login/") 
+   
    cursor = db_connect.cursor(dictionary=True)
    cursor.execute("select * from students where student_id = %s;",(student_id,))
 
@@ -142,14 +161,21 @@ def student_id(student_id):
 
 @app.route("/librarian/")
 def librarian():
+   if not session.get("username"):
+      return redirect("/login/")    
    return render_template("librarian.html"),200
 
 @app.route("/reports/", methods=["GET", "POST"])
 def reports():
+   if not session.get("username"):
+      return redirect("/login/") 
    return render_template("reports.html",data=0,data1=0,data2=0),200
 
 @app.route("/reports/student", methods=["GET", "POST"])
 def reports_student():
+   if not session.get("username"):
+      return redirect("/login/") 
+
    if request.method == "POST":
       id = int(request.form["studentId"])
       cursor = db_connect.cursor()
@@ -163,8 +189,7 @@ def reports_student():
       sql_query1 = "select book_id from books where allocated_to_id = %s;"
       cursor.execute (sql_query1, (id,))
       std_record1=cursor.fetchall()
-      print ("cursor.rowcount:", cursor.rowcount)
-      
+            
       if cursor.rowcount == 0:
          books = "None"
       else:
@@ -180,6 +205,8 @@ def reports_student():
 
 @app.route("/reports/teacher", methods=["GET", "POST"])
 def reports_teacher():
+   if not session.get("username"):
+      return redirect("/login/") 
    if request.method == "POST":
       id = int(request.form["teacherId"])
       cursor = db_connect.cursor()
@@ -193,8 +220,7 @@ def reports_teacher():
       sql_query1 = "select book_id from books where allocated_to_id = %s;"
       cursor.execute (sql_query1, (id,))
       std_record1=cursor.fetchall()
-      print ("cursor.rowcount:", cursor.rowcount)
-    
+          
       if cursor.rowcount == 0:
          books = "None"
       else:
@@ -209,6 +235,9 @@ def reports_teacher():
 
 @app.route("/reports/book", methods=["GET", "POST"])
 def reports_book():
+   if not session.get("username"):
+      return redirect("/login/") 
+   
    if request.method == "POST":
       id = int(request.form["bookId"])
       cursor = db_connect.cursor()
@@ -226,6 +255,9 @@ def reports_book():
 
 @app.route("/student/update", methods=["GET", "POST"])
 def std_edit():
+   if not session.get("username"):
+      return redirect("/login/") 
+   
    if request.method == "POST":
       std_id = request.form["studentId"]
       std_name = request.form["studentName"]
@@ -244,6 +276,9 @@ def std_edit():
 
 @app.route("/student/delete", methods=["GET", "POST"])
 def std_delete():
+   if not session.get("username"):
+      return redirect("/login/") 
+
    if request.method == "POST":
       std_id = request.form["studentId"]
 
@@ -260,6 +295,9 @@ def std_delete():
 
 @app.route("/student/get", methods=["GET", "POST"])
 def std_get():
+   if not session.get("username"):
+      return redirect("/login/") 
+   
    if request.method == "POST":
       id = int(request.form["studentId"])
       cursor = db_connect.cursor()
@@ -267,7 +305,7 @@ def std_get():
       cursor.execute (sql_query, (id,))
       std_record=cursor.fetchone()
       cursor.close()
-      print(std_record)
+      
       return render_template("admin.html", data=std_record),200
    else:
       return render_template("admin.html",data=0),200
@@ -275,6 +313,9 @@ def std_get():
 
 @app.route("/teacher_add/", methods=["GET", "POST"])
 def teacher_add():
+   if not session.get("username"):
+      return redirect("/login/") 
+   
    if request.method == "POST":
       teacher_id = request.form["teacherId"]
       teacher_name = request.form["teacherName"]
@@ -293,6 +334,9 @@ def teacher_add():
 
 @app.route("/teacher_delete/", methods=["GET", "POST"])
 def teacher_delete():
+   if not session.get("username"):
+      return redirect("/login/") 
+
    if request.method == "POST":
       teacher_id = request.form["teacherId"]
 
@@ -308,6 +352,9 @@ def teacher_delete():
 
 @app.route("/teacher/update", methods=["GET", "POST"])
 def teacher_edit():
+   if not session.get("username"):
+      return redirect("/login/") 
+      
    if request.method == "POST":
       teacher_id = request.form["teacherId"]
       teacher_name = request.form["teacherName"]
@@ -327,6 +374,9 @@ def teacher_edit():
 
 @app.route("/book_add/", methods=["GET", "POST"])
 def book_add():
+   if not session.get("username"):
+      return redirect("/login/") 
+
    if request.method == "POST":
       book_id = request.form["bookId"]
       book_title = request.form["bookTitle"]
@@ -353,6 +403,9 @@ def book_add():
 
 @app.route("/book_delete/", methods=["GET", "POST"])
 def book_delete():
+   if not session.get("username"):
+      return redirect("/login/") 
+
    if request.method == "POST":
       book_id = request.form["bookId"]
 
@@ -368,6 +421,9 @@ def book_delete():
 
 @app.route("/book/update", methods=["GET", "POST"])
 def book_edit():
+   if not session.get("username"):
+      return redirect("/login/") 
+
    if request.method == "POST":
       book_id = request.form["bookId"]
       book_title = request.form["bookTitle"]
@@ -391,6 +447,9 @@ def book_edit():
 
 @app.route("/book/issue", methods=["GET", "POST"])
 def book_issue():
+   if not session.get("username"):
+      return redirect("/login/") 
+
    if request.method == "POST":
       member_id = request.form["memberId"]
       book_id = request.form["bookId"]
@@ -409,11 +468,14 @@ def book_issue():
 
 @app.route("/book/return", methods=["GET", "POST"])
 def book_return():
+   if not session.get("username"):
+      return redirect("/login/") 
+
    if request.method == "POST":
       member_id = request.form["memberId"]
       book_id = request.form["bookId"]
       date = request.form["returnDate"]
-      print(date)
+      
       cursor = db_connect.cursor()
       sql_query = "update books set book_availability='Yes', issue_date=null, allocated_to_id=0, return_date=%s  where book_id=%s;"
       cursor.execute (sql_query, (date, book_id,))

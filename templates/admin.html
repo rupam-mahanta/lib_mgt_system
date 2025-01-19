@@ -49,6 +49,7 @@
                 <input type="submit" value="Add" class="mybutton" formaction="{{url_for('student')}}" >
                 <input type="submit" value="Edit" class="mybutton" formaction="{{url_for('std_edit')}}" >                
                 <input type="submit" value="Delete" class="mybutton" formaction="{{url_for('std_delete')}}" > 
+                <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}">  
                 <br><br><br>
             </div>
 
@@ -70,6 +71,7 @@
                 <input type="submit" value="Add" class="mybutton" formaction="{{url_for('teacher_add')}}">
                 <input type="submit" value="Edit" class="mybutton" formaction="{{url_for('teacher_edit')}}">
                 <input type="submit" value="Delete" class="mybutton" formaction="{{url_for('teacher_delete')}}">
+                <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}">  
             </div>
         </form>
     </div>
@@ -98,6 +100,7 @@
                 <input type="submit" value="Add" class="mybutton" formaction="{{url_for('book_add')}}">
                 <input type="submit" value="Edit" class="mybutton" formaction="{{url_for('book_edit')}}">
                 <input type="submit" value="Delete" class="mybutton" formaction="{{url_for('book_delete')}}">
+                <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}">  
             </div>
         </form>
 

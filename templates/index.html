@@ -9,7 +9,8 @@
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="/librarian/">Librarian</a>
+                <a class="nav-link" href="{{url_for('librarian')}}">Librarian</a>
+                <!-- <a class="nav-link" href="/librarian/">Librarian</a> -->
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="/admin/">Admin</a>
@@ -32,7 +33,7 @@
 
 {% block content %}
 <div class="homepage">
-  <!--<a href="{{ url_for('logout') }}" class="btn btn-warning btn-sm" style="float: right; font-weight: bolder; padding-left: 20px; padding-right: 20px;"> Click to Logout </a>-->
+
   <br><br><br><br>
   <h1 style="padding-left: 5%; font-weight: bold;"> Welcome to Library Management System ! </h1>
 </div>

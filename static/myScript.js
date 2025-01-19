@@ -8,6 +8,7 @@ function validateForm_std() {
       alert("Student_Id must be filled out");
       return false;
     }    
+       
 }
 
 function validateForm_teacher() {
@@ -176,3 +177,4 @@ function validateForm_admin_book() {
       return false;
     }  
 }
+

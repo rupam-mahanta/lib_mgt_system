@@ -40,7 +40,8 @@
             <label for="studentID"> Student Id: </label> <input type="number" id="studentId" name="studentId"> <br> <br>
 
             <div class="form-buttons">
-                <input type="submit" value="Get Student Details" class="btn btn-primary btn-sm" formmethod="post">
+                <input type="submit" value="Get Student Details" class="btn btn-primary btn-sm" formmethod="post" >
+                <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}">  
             </div>
 
         </form>
@@ -54,6 +55,7 @@
         </div>
     </div>
 
+        
     <div class="teacher_report_container report_sub_container" style="background-color: lightgrey;">
         <form action="{{url_for('reports_teacher')}}" method="post" name="teacher"  onsubmit="return validateForm_teacher()"
               style="width: 300px; height: 50px; margin-left: 10%;">
@@ -61,6 +63,7 @@
 
             <div class="form-buttons">
                 <input type="submit" value="Get Teacher Details" class="btn btn-primary btn-sm" formmethod="post">
+                <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}">  
             </div>
 
         </form>
@@ -81,6 +84,7 @@
 
             <div class="form-buttons">
                 <input type="submit" value="Get Book Details" class="btn btn-primary btn-sm" formmethod="post">
+                <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}">  
             </div>
 
         </form>

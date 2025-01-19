@@ -39,6 +39,7 @@
 
     <div class="form-buttons">
         <input type="submit" value="Issue Book" class="btn btn-primary btn-sm" formaction="{{url_for('book_issue')}}">
+        <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}">  
     </div>
 </form>
 
@@ -50,6 +51,7 @@
 
     <div class="form-buttons">
         <input type="submit" value="Return Book" class="btn btn-primary btn-sm" formaction="{{url_for('book_return')}}">
+        <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}">  
     </div> <br>
 
 
