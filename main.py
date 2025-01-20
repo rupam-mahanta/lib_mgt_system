@@ -8,12 +8,14 @@ from flask_session import Session
 # import logging
 import os
 from dotenv import load_dotenv
+from flask_bcrypt import Bcrypt
 
-
-app = Flask(__name__)
-app.secret_key = "mysecretkey111!"
-csrf = CSRFProtect(app) 
 load_dotenv() 
+app = Flask(__name__)
+app.secret_key = os.getenv('app.secret_key')
+db_pw_secret = os.getenv('db_pw_secret')
+csrf = CSRFProtect(app) 
+bcrypt = Bcrypt(app)
 
 # for session
 app.config["SESSION_PERMANENT"] = False
@@ -68,22 +70,28 @@ def login():
    msg = ''
    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
       username = request.form['username']
-      password = request.form['password']
-      cursor = db_connect.cursor()
-      cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password,))
-      account = cursor.fetchone()      
-      cursor.close()
+      password = request.form['password']   
+      cursor = db_connect.cursor()      
+      cursor.execute('SELECT * FROM accounts WHERE username = %s', (username,))
+      account = cursor.fetchone()     
+      
+      if cursor.rowcount == 0:        
+         msg = "User ID not found...Please register if you don't have an User ID !!!"        
+      else:    
+         stored_password = account[2]
+         if bcrypt.check_password_hash(stored_password, password):
+            print("password matched")
+            session['loggedin'] = True
+            # session['id'] = account['user_id']
+            session['username'] = username            
+            return render_template('index.html')
+         else:
+            msg = 'Incorrect username / password !'    
 
-      if account:
-         session['loggedin'] = True
-         # session['id'] = account['user_id']
-         session['username'] = username
-         msg = 'account details fetched successfully !'
-         return render_template('index.html', msg = msg)
-      else:
-         msg = 'Incorrect username / password !'
-
+      cursor.close()              
+      
    return render_template('login.html', msg = msg)
+
 
 @app.route('/logout/')
 def logout():
@@ -98,7 +106,7 @@ def register():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form :
         username = request.form['username']
         password = request.form['password']
-        email = request.form['email']
+        email = request.form['email']        
         cursor = db_connect.cursor()
         cursor.execute('SELECT * FROM accounts WHERE username = %s', (username, ))
         account = cursor.fetchone()
@@ -111,7 +119,8 @@ def register():
         elif not username or not password or not email:
             msg = 'Please fill out the form !'
         else:
-            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (username, password, email, ))
+            hashed_password =  bcrypt.generate_password_hash(password).decode('utf-8')
+            cursor.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s)', (username, hashed_password, email, ))
             db_connect.commit()
             cursor.close()
             msg = 'You have successfully registered !'
