@@ -6,10 +6,14 @@ import re
 from flask_wtf import CSRFProtect 
 from flask_session import Session
 # import logging
+import os
+from dotenv import load_dotenv
+
 
 app = Flask(__name__)
 app.secret_key = "mysecretkey111!"
 csrf = CSRFProtect(app) 
+load_dotenv() 
 
 # for session
 app.config["SESSION_PERMANENT"] = False
@@ -26,10 +30,10 @@ Session(app)
 
 try:
    db_connect = mysql.connector.connect(
-   host='localhost',
-   user='root',
-   password='Rupam1973!',
-   database='lib_mgt_sys_db'   
+      host= os.getenv('db_host'),
+      user= os.getenv('db_user'),
+      password= os.getenv('db_password'),
+      database= os.getenv('db_database')   
    )
    # logging.info ("DB CONNECTED...")   
    message = "DB CONNECTED..."
@@ -40,10 +44,10 @@ except mysql.connector.Error as e:
 
 # try:
 #     db_connect = mysql.connector.connect(
-#     host='RupamMahanta.mysql.pythonanywhere-services.com',
-#     user='RupamMahanta',
-#     password='Library1234!',
-#     database='RupamMahanta$lib_mgt_sys_db'
+#        host= os.getenv('paw_db_host'),
+#        user= os.getenv('paw_db_user'),
+#        password= os.getenv('paw_db_password'),
+#        database= os.getenv('paw_db_database')
 #     )
 #     message = "DB CONNECTED..."
 # except mysql.connector.Error as e:

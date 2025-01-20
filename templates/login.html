@@ -28,8 +28,8 @@
                 <div class="display-flash-error"> {{ msg }} </div>
                 <br>
 
-                <label for="username"> Enter Username : </label> <input id="username" name="username" type="text" value=""> <br><br>
-                <label for="password"> Enter Password : </label> <input id="password" name="password" type="password" value="">
+                <label for="username"> Enter Username : </label> <input id="username" name="username" type="text" required> <br><br>
+                <label for="password"> Enter Password : </label> <input id="password" name="password" type="password" required>
                 <br><br><br>
                 <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}">  
                 <input type="submit" class="btn btn-primary btn-sm" value="Sign In">
