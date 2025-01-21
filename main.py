@@ -1,34 +1,33 @@
-import logging.config
 from flask import Flask, redirect, url_for, render_template, request, session, flash, jsonify
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 import mysql.connector
 import re
 from flask_wtf import CSRFProtect 
 from flask_session import Session
-# import logging
+import logging
 import os
 from dotenv import load_dotenv
 from flask_bcrypt import Bcrypt
 
 load_dotenv() 
 app = Flask(__name__)
+
 app.secret_key = os.getenv('app.secret_key')
 db_pw_secret = os.getenv('db_pw_secret')
+
 csrf = CSRFProtect(app) 
+
 bcrypt = Bcrypt(app)
 
-# for session
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-
-
-# logging.basicConfig (
-#    filename = "LibMgtSys.log",
-#    level = logging.INFO,                
-#    format = "%(asctime)s - %{levelname}s - %{message}s" 
-# )
+logging.basicConfig (
+   filename = "LibMgtSys.log",
+   level = logging.WARNING,                
+   format = "[%(asctime)s] - %(levelname)s in %(module)s: %(message)s" 
+)
 
 try:
    db_connect = mysql.connector.connect(
@@ -37,11 +36,10 @@ try:
       password= os.getenv('db_password'),
       database= os.getenv('db_database')   
    )
-   # logging.info ("DB CONNECTED...")   
-   message = "DB CONNECTED..."
+   app.logger.info ("DB CONNECTED...")   
+   
 except mysql.connector.Error as e:
-   # logging.warning ("DB NOT CONNECTED...")
-   message = "DB NOT CONNECTED..."
+   app.logger.warning ("DB NOT CONNECTED...")   
 
 
 # try:
@@ -51,10 +49,10 @@ except mysql.connector.Error as e:
 #        password= os.getenv('paw_db_password'),
 #        database= os.getenv('paw_db_database')
 #     )
-#     message = "DB CONNECTED..."
+#     app.logger.info ("DB CONNECTED...")
 # except mysql.connector.Error as e:
-#     logging.warning ("DB NOT CONNECTED...")
-#     message = "DB NOT CONNECTED..."
+#     app.logger.warning ("DB NOT CONNECTED...")
+
 
 
 @app.route('/home/', methods=["GET"])
@@ -79,8 +77,7 @@ def login():
          msg = "User ID not found...Please register if you don't have an User ID !!!"        
       else:    
          stored_password = account[2]
-         if bcrypt.check_password_hash(stored_password, password):
-            print("password matched")
+         if bcrypt.check_password_hash(stored_password, password):            
             session['loggedin'] = True
             # session['id'] = account['user_id']
             session['username'] = username            
