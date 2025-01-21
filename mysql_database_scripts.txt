@@ -1,0 +1,58 @@
+mysql> create database lib_mgt_sys_db;
+mysql> show databases;
+mysql> use lib_mgt_sys_db;
+mysql> select database();   
+
+mysql> CREATE TABLE students (student_id int PRIMARY KEY, student_name  varchar(255), student_grade  varchar(30), student_section varchar (30));    
+mysql> desc students;
+
+mysql> create table teachers (teacher_id int PRIMARY KEY, teacher_name  varchar(255), teacher_email varchar(50));
+mysql> desc teachers;
+
+mysql> create table books (book_id int PRIMARY KEY, book_title varchar(255), book_author varchar(255), book_subject varchar(255), book_availability varchar(30), 
+                           allocated_to_id int, issue_date date, return_date date);
+mysql> desc books;
+
+mysql> create table accounts (user_id int auto_increment PRIMARY KEY, username varchar(55) not null, password varchar(255) not null, email varchar(55) not null); 
+mysql> desc accounts;
+                                                    
+mysql> show tables;
+
+
+=====================================================================================================================================================================
+Data entry queries:
+
+insert into students (student_id, student_name, student_grade, student_section)
+       values (1001, "Rushi Choudhury", "11", "B"), 
+              (1002, "Ram Damodar", "11", "B"), 
+              (1003, "Neha Sarangi", "11", "C");
+
+insert into teachers (teacher_id, teacher_name, teacher_email) 
+       values (101, "Neha Madam", "naha@gmail.com"),
+              (102, "Nitu Madam", "nitu@gmail.com"),
+              (103, "Arvind Sir", "arvind@gmail.com");
+              
+insert into books (book_id, book_title, book_author, book_subject, book_availability)
+      values  (002, "Physics for 12th Grade", "Author-1", "Physics", "Yes"),
+              (003, "Maths for 11th Grade", "Author-2", "Maths", "Yes"),
+              (004, "Maths for 12th Grade", "Author-2", "Maths", "Yes"),
+              (005, "Chemistry for 11th Grade", "Author-3", "Chem", "Yes"),
+              (006, "Chemistry for 12th Grade", "Author-3", "Chem", "Yes"),
+              (007, "Biology for 11th Grade", "Author-4", "Bio", "Yes"),
+              (008, "Biology for 12th Grade", "Author-4", "Bio", "Yes"),
+              (009, "English for 11th Grade", "Author-5", "English", "Yes"),
+              (010, "English for 12th Grade", "Author-5", "English", "Yes"),
+              (011, "Computer for 11th Grade", "Author-6", "Computer", "Yes"),
+              (012, "Computer for 12th Grade", "Author-6", "Computer", "Yes");
+
+insert into books (book_id, book_title, book_author, book_subject, book_availability, allocated_to_id, issue_date, return_date)
+      values  (009, "English for 11th Grade", "Author-5", "English", "No",1001),
+              (010, "English for 12th Grade", "Author-5", "English", "No",101),
+              (011, "Computer for 11th Grade", "Author-6", "Computer", "No",1001),
+              (012, "Computer for 12th Grade", "Author-6", "Computer", "No",1002);
+
+
+
+
+
+
